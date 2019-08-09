@@ -15,7 +15,7 @@
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="gallery"
+          :items="getItems"
           :search="search"
         >
           <template v-slot:items="props">
@@ -23,8 +23,8 @@
             <td class="text-xs-center">{{ props.item.name }}</td>
             <td class="text-xs-center">{{ props.item.nameComplete }}</td>
             <td class="text-xs-center">{{ props.item.date }}</td>
-            <td class="text-xs-center">{{ props.item.imageStorage.length }}</td>
-            <td class="text-xs-center">{{ props.item.description }}</td>
+            <td class="text-xs-center">{{ props.item.imageStorage.substr(0,15) }}</td>
+            <td class="text-xs-center">{{ props.item.description.substr(0,15) }}</td>
             <td class="justify-center layout px-0">
               <v-icon
                 small
@@ -35,7 +35,7 @@
               </v-icon>
               <v-icon
                 small
-                @click.stop="dialogDelete = true"
+                @click="deleteItem(props.item)"
               >
                 delete
               </v-icon>
@@ -128,9 +128,10 @@
 <script>
   import firebase from 'firebase'
   import { db } from '@/main'
+  import { mapGetters } from 'vuex'
   export default {
     name:'tabla',
-    beforeCreate: function () {
+    beforeCreate() {
     this.$store.dispatch('setItems')
     },
     data () {
@@ -160,7 +161,7 @@
           { text: 'Descripción', align: 'center', value: 'description' },
           { text: 'Acciones', value: 'id',sortable: false, }
         ],
-        gallery:this.$store.getters.getItems
+        // gallery:this.$store.getters.getItems
         // gallery:[
         //   {
         //     id:'1',
@@ -181,7 +182,8 @@
         const storageRef = firebase.storage()
         // var desertRef = storageRef.child('imagenes/'+ item.imageStorage);
         storageRef.refFromURL(item.imageStorage).delete().then(function() {
-            console.log('se elimino la imagen', item.imageStorage);           
+            console.log('se elimino la imagen', item.imageStorage);
+            alert('se elimino el archivo')         
         }).catch(function(error) {
             console.log('error');   
         });
@@ -204,8 +206,8 @@
           description:description
         }).then(function() {
           // this.dialog = false
-          alert('Actualizado correctamente')
-          this.alertUpdate = true
+          // alert('Actualizado correctamente')
+          // this.alertUpdate = true
           console.log("Document successfully updated!");
         })
         .catch(function(error) {
@@ -213,7 +215,8 @@
             console.error("Error updating document: ", error);
         });
       }
-    }
+    },
+    computed:mapGetters(['getItems'])
   }
 </script>
 

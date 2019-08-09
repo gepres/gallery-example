@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "babel-preset-stage-2": "^6.24.1",
     "core-js": "^2.6.5",
     "firebase": "^6.3.0",
     "vue": "^2.6.10",
