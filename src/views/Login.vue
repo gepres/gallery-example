@@ -51,6 +51,7 @@
       ingresar(){
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(() => {
           console.log('ingresado por firebase')
+          this.$router.replace({ name: 'admin' })
         }).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;

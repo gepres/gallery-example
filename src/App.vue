@@ -12,7 +12,7 @@
         <v-btn flat to="/admin" v-show="loginApp">Admin</v-btn>
         <v-btn flat to="/tabla" v-show="loginApp">Tabla</v-btn>
         <!-- <v-btn flat to="/imagen">imagenes</v-btn> -->
-        <v-btn flat to="/login">Login</v-btn>
+        <v-btn flat to="/login" v-show="observador">Login</v-btn>
       </v-toolbar-items>
        <v-spacer></v-spacer>
       <v-toolbar-title v-show="loginApp">{{emailNav}}</v-toolbar-title>
@@ -33,6 +33,7 @@ export default {
   data () {
     return {
       loginApp:false,
+      observador:true,
       emailNav:''
     }
   },
@@ -50,7 +51,8 @@ export default {
         if (user) {
           console.log('ingresado app ' + user.email);
           // console.log('login : ' + this.loginApp); 
-          this.loginApp = true 
+          this.loginApp = true
+          this.observador = false
           this.emailNav = user.email       
         } else {
           // console.log('no ingresado');

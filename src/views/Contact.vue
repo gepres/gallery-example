@@ -11,19 +11,15 @@
           ref="form"
           v-model="valid"
           lazy-validation
+          action="https://us-central1-examplefirebase-a860f.cloudfunctions.net/enviarEmail"
+          method="post"
+          @submit="enviar"
         >
-          <v-text-field
-            v-model="name"
-            :counter="15"
-            :rules="nameRules"
-            label="Nombre"
-            required
-          ></v-text-field>
-
           <v-text-field
             v-model="email"
             :rules="emailRules"
             label="E-mail"
+            name="remite"
             required
           ></v-text-field>
 
@@ -32,12 +28,13 @@
             :counter="15"
             :rules="nameRules"
             label="Asunto"
+            name="asunto"
             required
           ></v-text-field>
           
           <v-textarea
            v-model="mensaje"
-          name="input-7-1"
+          name="cuerpo"
           label="mensaje"
           hint="contenido"
         ></v-textarea>
@@ -45,9 +42,9 @@
           <v-btn
             :disabled="!valid"
             color="success"
-            @click="validate"
+            type="submit"
           >
-            Validate
+            Enviar
           </v-btn>
         </v-form>
       </v-flex>
@@ -56,12 +53,16 @@
 </template>
 
 <script>
+// import nodemailer from 'nodemailer'
+// import functions from 'firebase/firebase-functions'
   export default {
     name:'contacto',
+    mounted(){
+      
+    }, 
     data(){
       return {
       valid: true,
-      name: '',
       nameRules: [
         v => !!v || 'Nombre es querido',
         v => (v && v.length <= 15) || 'Name must be less than 15 characters'
@@ -76,10 +77,11 @@
       }
     },
     methods: {
-      validate () {
-        if (this.$refs.form.validate()) {
-          this.snackbar = true
-        }
+      enviar(e){
+        setTimeout(() => {
+           e.preventDefault();
+            window.location.reload()
+        }, 3000);
       }
     }
   }

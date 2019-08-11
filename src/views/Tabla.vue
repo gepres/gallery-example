@@ -128,7 +128,7 @@
 <script>
   import firebase from 'firebase'
   import { db } from '@/main'
-  import { mapGetters } from 'vuex'
+  import { mapGetters,mapActions  } from 'vuex'
   export default {
     name:'tabla',
     beforeCreate() {
@@ -216,7 +216,10 @@
         });
       }
     },
-    computed:mapGetters(['getItems'])
+    // computed:mapGetters(['getItems'])
+    computed: {
+      ...mapGetters(['getItems']),
+    },
   }
 </script>
 
