@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
   
   if (autorizacion && !usuario){
     console.log('no puede ingresar a tabla y admin') 
-    next('home')
+    next('/')
   }else if(!autorizacion && usuario){
     next()
   }else{

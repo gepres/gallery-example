@@ -46,6 +46,13 @@
           >
             Enviar
           </v-btn>
+           <v-alert
+            :value="true"
+            v-show="showContact"
+            type="success"
+          >
+            Mensaje enviado satifactoriamente.
+          </v-alert>
         </v-form>
       </v-flex>
     </v-layout>
@@ -73,15 +80,17 @@
         v => /.+@.+/.test(v) || 'E-mail must be valid'
       ],
       asunto:'',
-      mensaje:''
+      mensaje:'',
+      showContact:false
       }
     },
     methods: {
       enviar(e){
+        this.showContact = true
         setTimeout(() => {
            e.preventDefault();
             window.location.reload()
-        }, 3000);
+        }, 4000);
       }
     }
   }
