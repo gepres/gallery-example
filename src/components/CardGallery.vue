@@ -1,5 +1,5 @@
 <template>
-      <v-flex xs12 sm6 md4 lg4>
+      <v-flex :class="gallery.categoryValue" class="lg-4" lg4 md4 sm6 xs12>
       <v-hover>
         <v-card
           slot-scope="{ hover }"
@@ -10,6 +10,7 @@
           <v-img
             :aspect-ratio="16/9"
             :src="gallery.imageStorage"
+            :alt="gallery.nameComplete"
           >
             <v-expand-transition>
               <div
@@ -32,29 +33,40 @@
       max-width="900"
     >
       <v-card>
-        <v-card-title class="headline green darken-1 white--text">Fotografia</v-card-title>
-        <v-img class="white--text" :aspect-ratio="16/9" :src="gallery.imageStorage">
-        <v-card-title class="align-end fill-height">{{gallery.name}}</v-card-title>
+        <v-card-title class="headline green darken-1 white--text">Fotografía</v-card-title>
+        <v-img class="white--text" :aspect-ratio="16/9" :src="gallery.imageStorage" :alt="gallery.nameComplete">
+        <v-card-title class="align-end justify-end  fill-height">Matthews Carbonel</v-card-title>
         </v-img>
          <v-card-title class="headline green lighten-5">{{gallery.name}}</v-card-title>
         <v-card-text primary-title>
-            <div>
-              <div class="dialog-description">
-                <span class="grey--text subtitle-1 lineheight">Descripción</span>
+            <v-layout wrap>
+              <v-flex class="dialog-description" lg6 md6 sm12 xs12>
+                <span class="green--text darken-4 subtitle-1 lineheight"><b>Descripción</b></span>
                 <br>
-                <p>{{gallery.description}}</p>
-              </div>
-              <span class="grey--text subtitle-1 lineheight">Detalles</span>
+                <p  class="ml-4 mr-3">{{gallery.description}} 
+                  <a :href="gallery.link" class="dialog-description__link" v-show="enlace" target="_black">Enlace adicional</a>
+                </p>
+              </v-flex>
+             <v-flex class="dialog-detalles" lg6 md6 sm12 xs12>
+              <span class="green--text darken-4 subtitle-1 lineheight" ><b>Detalles</b></span>
               <br>
-              <ul class="dialog-list">
-                <li class="dialog-item">
-                  Nombre : <span>{{gallery.nameComplete}}</span>
-                </li>
-                <li>
-                  Necha de publicación : <span>{{gallery.date}}</span>
-                </li>
-              </ul>
-            </div>
+              <div style="display:flex;" class="ml-4">
+                <div class="dialog-detalles__left">
+                  <b><p>Nombre completo<span>:</span></p></b>
+                  <b><p>Fecha de publicación<span>:</span></p></b>
+                 </div>
+                <div class="dialog-detalles__right">
+                    <p>{{gallery.nameComplete}}</p>
+                    <p>{{gallery.date}}</p>
+                </div>
+              </div>
+             </v-flex>
+             <v-flex  lg6 md6 sm12 xs12>
+                <v-chip label class="green darken-1 ml-0 mr-2" text-color="white" v-for="(item, index) in gallery.categoryValue" :key="index">
+                  <v-icon left>label</v-icon>{{item}}
+                </v-chip>
+             </v-flex>
+            </v-layout>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -64,7 +76,7 @@
             @click="dialog = false"
             class="white--text"
           >
-            Aceptar
+            Cerrar
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -74,13 +86,22 @@
 </template>
 
 <script>
-import url from '@/assets/ave3.jpg'
   export default {
     name:'card-gallery',
     props:['gallery'],
     data(){
       return {
         dialog:false,
+        enlaceShow:false,
+        cate:this.gallery.categoryValue
+      }
+    },
+    computed:{
+      //forma que si quiere poner un enlace
+      enlace(){
+        if(this.gallery.link !== ''){
+          return this.enlaceShow = true
+        }
       }
     }
   }
@@ -103,8 +124,33 @@ import url from '@/assets/ave3.jpg'
     margin-bottom: 2.5rem;
   }
   &-list{
+
     & li{
       list-style: none;
+    }
+  }
+  &-detalles{
+    &__left{
+      max-width: 35%;
+    // background: red;
+       @media screen and (max-width:960px) {
+          max-width: 50%;
+       }
+      & p {
+        color:#81C784;
+      }
+      & span{
+        float: right;
+      }
+    }
+    &__right{
+      padding-left: 10px;
+    }
+  }
+  &-description{
+    &__link{
+      text-decoration: none;
+      color:#9CCC65;
     }
   }
 }

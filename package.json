@@ -10,9 +10,12 @@
     "@babel/polyfill": "^7.0.0-rc.1",
     "core-js": "^2.6.5",
     "firebase": "^6.3.0",
+    "isotope-layout": "^3.0.6",
     "nodemailer": "^6.3.0",
     "vue": "^2.6.10",
+    "vue-images-loaded": "^1.1.2",
     "vue-router": "^3.0.3",
+    "vueisotope": "^3.1.2",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1"
   },

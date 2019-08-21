@@ -5,7 +5,8 @@ import App from './App.vue'
 import router from './router'
 import {store} from './store'
 import firebase from 'firebase'
-
+import Vueisotope from 'vueisotope'
+Vue.use(Vueisotope)
 Vue.config.productionTip = false
 
 const config = {

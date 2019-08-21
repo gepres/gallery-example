@@ -8,6 +8,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flatt to="/">Inicio</v-btn>
+        <v-btn flatt to="/galeria">Galeria</v-btn>
         <v-btn flatt to="/contacto">Contacto</v-btn>
         <v-btn flat to="/admin" v-show="loginApp">Admin</v-btn>
         <v-btn flat to="/tabla" v-show="loginApp">Tabla</v-btn>

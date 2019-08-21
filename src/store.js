@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
         items = []
         snapshot.forEach((doc) => {
           const data = doc.data()
-          items.push({ id: doc.id, name: data.name, nameComplete: data.nameComplete, imageStorage:data.imageStorage, date: data.date, description: data.description })
+          items.push({ id: doc.id, name: data.name, nameComplete: data.nameComplete, imageStorage: data.imageStorage, date: data.date, description: data.description, link: data.link, categoryValue:data.categoryValue})
         })
 
         state.items = items

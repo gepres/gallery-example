@@ -24,6 +24,8 @@
             <td class="text-xs-center">{{ props.item.nameComplete }}</td>
             <td class="text-xs-center">{{ props.item.date }}</td>
             <td class="text-xs-center">{{ props.item.imageStorage.substr(0,15) }}</td>
+            <td class="text-xs-center">{{ props.item.link !== '' ? 'con enlace' : 'sin enlace ' }}</td>
+             <td class="text-xs-center">{{ props.item.categoryValue}}</td>
             <td class="text-xs-center">{{ props.item.description.substr(0,15) }}</td>
             <td class="justify-center layout px-0">
               <v-icon
@@ -95,12 +97,21 @@
                   <v-text-field v-model="editedItem.nameComplete" :counter="35" label="Nombre Completo"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md12>
-                  <!-- <v-text-field v-model="editedItem.image" label="imagen"></v-text-field> -->
-                  <!-- <input type="file" accept="image/*"> -->
-                </v-flex>
-                <v-flex xs12 sm6 md12>
                   <v-text-field type="date" v-model="editedItem.date" label="Fecha"></v-text-field>
                 </v-flex>
+                <v-flex xs12 sm6 md12>
+                  <v-text-field  v-model="editedItem.link" label="enlace opcional"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md12>
+                  <v-select
+                    :items="category"
+                    v-model="editedItem.categoryValue"
+                    attach
+                    chips
+                    label="categoria"
+                    multiple
+                    ></v-select>
+                  </v-flex>
                 <v-flex xs12 sm6 md12>
                   <v-textarea v-model="editedItem.description" :counter="215" label="Descripción"></v-textarea>
                 </v-flex>
@@ -117,7 +128,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="guardar(editedItem.id,editedItem.name,editedItem.nameComplete,editedItem.date,editedItem.description)">Guardar</v-btn>
+            <v-btn color="blue darken-1" flat @click="guardar(editedItem.id,editedItem.name,editedItem.nameComplete,editedItem.date,editedItem.description,editedItem.link,editedItem.categoryValue)">Guardar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -145,8 +156,11 @@
         nameComplete:'',
         imageStorage:null,
         date:'',
-        description:''
+        description:'',
+        link:'',
+        categoryValue:null
         },
+        category: ['costa', 'sierra', 'selva'],
         headers: [
           {
             text: 'Id',
@@ -158,19 +172,11 @@
           { text: 'Nombres Completo', align: 'center',value: 'nameComplete' },
           { text: 'Fecha', align: 'center', value: 'date' },
           { text: 'Imagen', align: 'center', value: 'image' },
+          { text: 'Enlace', align: 'center', value: 'link' },
+          { text: 'Categoria', align: 'center', value: 'categoryValue' },
           { text: 'Descripción', align: 'center', value: 'description' },
           { text: 'Acciones', value: 'id',sortable: false, }
-        ],
-        // gallery:this.$store.getters.getItems
-        // gallery:[
-        //   {
-        //     id:'1',
-        //     name:'perro',
-        //     nameComplete:'perro salvaje',
-        //     date:'25-12-04',
-        //     description:'lorem sadsadsadsadasdasdsadasdsadasdasdsa'
-        //   }
-        // ]
+        ]
       }
     },
     methods:{
@@ -196,14 +202,16 @@
       close () {
         this.dialog = false
       },
-      guardar(id,name,nameComplete,date,description){
+      guardar(id,name,nameComplete,date,description,link,categoryValue){
         // console.log(`el nombre es ${name} con id : ${id}`);  
         var galleryRef = db.collection("gallery").doc(id);
         return galleryRef.update({
           name:name,
           nameComplete:nameComplete,
           date:date,
-          description:description
+          description:description,
+          link:link,
+          categoryValue:categoryValue
         }).then(function() {
           // this.dialog = false
           // alert('Actualizado correctamente')

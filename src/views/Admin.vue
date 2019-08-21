@@ -27,11 +27,6 @@
               required
             ></v-text-field>
 
-            <!-- <v-text-field
-              v-model="image"
-              label="url de imagen"
-              required
-            ></v-text-field> -->
 
             <input type="file" accept="image/*"  @change="onFileSeleted">
 
@@ -46,6 +41,21 @@
               v-model="date"
               type="date"
               label="Fecha"
+              required
+            ></v-text-field>
+
+            <v-select
+            :items="category"
+            v-model="categoryValue"
+            attach
+            chips
+            label="categoria"
+            multiple
+            ></v-select>
+
+            <v-text-field
+              v-model="link"
+              label="Link opcional"
               required
             ></v-text-field>
 
@@ -87,9 +97,9 @@ import firebase from 'firebase'
           valid: true,
           name: '',
           nameComplete:'',
-          // image:'',
           description:'',
           date:'',
+          link:'',
           errors:'',
           seletedFile:null,
           picture:null,
@@ -105,7 +115,9 @@ import firebase from 'firebase'
           descriptionRules: [
             v => !!v || 'descripción  es requerido',
             v => (v && v.length <= 215) || 'La descripción debe tener menos de 215 caracteres'
-          ]
+          ],
+          category: ['costa', 'sierra', 'selva'],
+          categoryValue: null
         }
     },
     methods:{
@@ -135,18 +147,20 @@ import firebase from 'firebase'
               name: this.name,
               nameComplete: this.nameComplete,
               description: this.description,
-              // image: this.image,
               date:this.date,
-              imageStorage:this.picture
+              imageStorage:this.picture,
+              link:this.link,
+              categoryValue:this.categoryValue
             }).then((res) => {
               console.log("Documento con ID: ", res.id); 
               console.log("url image: ", this.picture);    
               if (res) {
                 this.name = '',
                 this.nameComplete ='',
-                // this.image = '',
                 this.description = '',
-                this.date = ''              
+                this.date = '' ,
+                this.link ='',
+                this.categoryValue = null             
               }
             }).catch((error) => {
               this.errors = error
